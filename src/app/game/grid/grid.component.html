@@ -1,0 +1,42 @@
+<div class="row" *ngIf="winner === 0">
+  <button (click)="restart()" class="btn btn-default btn-block">
+    Restart Game
+  </button>
+
+  <div class="text-center">
+    <h3 *ngIf="game.isPlayerOne()">Player 1 turn!</h3>
+    <h3 *ngIf="game.isPlayerTwo()">Player 2 turn!</h3>
+  </div>
+
+</div>
+<div class="row scores-row">
+  <div class="games">
+    Games: {{noOfGames}} / {{totalGames}}
+  </div>
+  <div class="scores">
+      <div class="col player1">Player - 1: {{playerOne.score}}</div>
+      <div class="col player2">Player - 2: {{playerTwo.score}}</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="container">
+    <div *ngIf="showWinner" class="row winner-row">
+      <p>Player {{showWinner}} has won !</p>
+        <button type="button" class="col-xs-12 btn again" (click)="playAgain()"><i class="glyphicon glyphicon-equalizer"></i> Play again</button>
+    </div>
+
+    <div *ngIf="showWinner === 0">
+      <div class="row selection-row">
+        <div (mouseover)="show(i)" (click)="add(i)" class="selection-case" *ngFor="let piece of pieces; let i = index">
+          <div *ngIf="piece.visible" class="circle" [ngClass]="{'red': game.isPlayerOne(), 'yellow': game.isPlayerTwo()}"></div>
+        </div>
+      </div>
+
+      <div class="row custom-row" *ngFor="let row of game.grid">
+        <div class="case" (mouseover)="show(i)" (click)="add(i)" *ngFor="let case of row; let i = index">
+          <div class="circle" [ngClass]="{'white': case.isEmpty(), 'red': case.isRed(), 'yellow': case.isYellow()}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
